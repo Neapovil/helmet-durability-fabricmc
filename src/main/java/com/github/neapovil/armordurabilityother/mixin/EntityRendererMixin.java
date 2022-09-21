@@ -42,13 +42,20 @@ public class EntityRendererMixin
             return;
         }
 
+        if (text.getString().contains(" health"))
+        {
+            return;
+        }
+
         final PlayerEntity player = (PlayerEntity) entity;
 
         final MinecraftClient client = MinecraftClient.getInstance();
 
         final ItemStack helmet = player.getInventory().getArmorStack(3);
 
-        if (helmet.getDamage() == 0)
+        final int damage = helmet.getMaxDamage() - helmet.getDamage();
+
+        if (damage == 0)
         {
             return;
         }
@@ -64,11 +71,13 @@ public class EntityRendererMixin
 
         final boolean visible = !player.isSneaky();
 
-        this.textRenderer.draw(text1, h, (float) -18, 0x20FFFFFF, false, matrix4f, vertexConsumers, visible, j, light);
+        int y = -12;
+
+        this.textRenderer.draw(text1, h, y, 0x20FFFFFF, false, matrix4f, vertexConsumers, visible, j, light);
 
         if (visible)
         {
-            this.textRenderer.draw(text1, h, (float) -18, 0xFF0000, false, matrix4f, vertexConsumers, false, 0, light);
+            this.textRenderer.draw(text1, h, y, 0xFF0000, false, matrix4f, vertexConsumers, false, 0, light);
         }
     }
 }

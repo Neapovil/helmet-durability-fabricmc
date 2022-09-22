@@ -42,7 +42,7 @@ public class EntityRendererMixin
             return;
         }
 
-        if (text.getString().contains(" health"))
+        if (text.getString().toLowerCase().contains(" health"))
         {
             return;
         }

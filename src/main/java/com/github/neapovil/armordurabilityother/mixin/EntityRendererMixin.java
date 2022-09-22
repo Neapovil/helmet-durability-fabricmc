@@ -60,7 +60,7 @@ public class EntityRendererMixin
             return;
         }
 
-        final Text text1 = new LiteralText("" + (helmet.getMaxDamage() - helmet.getDamage())).setStyle(Style.EMPTY.withColor(0xFFFFFF).withBold(true));
+        final Text text1 = new LiteralText("" + damage).setStyle(Style.EMPTY.withColor(0xFFFFFF).withBold(true));
 
         float h = -this.textRenderer.getWidth(text1) / 2;
 
@@ -77,7 +77,7 @@ public class EntityRendererMixin
 
         if (visible)
         {
-            this.textRenderer.draw(text1, h, y, 0xFF0000, false, matrix4f, vertexConsumers, false, 0, light);
+            this.textRenderer.draw(text1, h, y, -1, false, matrix4f, vertexConsumers, false, 0, light);
         }
     }
 }

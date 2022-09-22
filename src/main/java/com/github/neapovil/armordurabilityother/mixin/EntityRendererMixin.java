@@ -60,7 +60,7 @@ public class EntityRendererMixin
             return;
         }
 
-        final Text text1 = new LiteralText("" + (helmet.getMaxDamage() - helmet.getDamage())).setStyle(Style.EMPTY.withColor(0xF04BFF).withBold(true));
+        final Text text1 = new LiteralText("" + (helmet.getMaxDamage() - helmet.getDamage())).setStyle(Style.EMPTY.withColor(0xFFFFFF).withBold(true));
 
         float h = -this.textRenderer.getWidth(text1) / 2;
 

@@ -1,4 +1,4 @@
-package com.github.neapovil.armordurabilityother.mixin;
+package com.github.neapovil.helmetdurability.mixin;
 
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;

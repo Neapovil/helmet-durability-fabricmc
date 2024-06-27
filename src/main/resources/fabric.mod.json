@@ -12,7 +12,8 @@
   "entrypoints": {
     "client": [
       "com.github.neapovil.helmetdurability.HelmetDurability"
-    ]
+    ],
+    "modmenu": ["com.github.neapovil.helmetdurability.integration.ModMenuIntegration"]
   },
   "mixins": [
     "helmetdurability.mixins.json"
@@ -20,6 +21,7 @@
   "depends": {
     "fabricloader": "*",
     "fabric": "*",
+    "cloth-config": "*",
     "minecraft": "~1.20",
     "java": ">=17"
   },

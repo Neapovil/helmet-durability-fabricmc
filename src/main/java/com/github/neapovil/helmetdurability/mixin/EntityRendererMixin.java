@@ -1,5 +1,6 @@
 package com.github.neapovil.helmetdurability.mixin;
 
+import com.github.neapovil.helmetdurability.HelmetDurability;
 import net.minecraft.util.Colors;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Final;
@@ -32,6 +33,11 @@ public class EntityRendererMixin
             method = "renderLabelIfPresent")
     protected void renderLabelIfPresent(Entity entity, Text text, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, float tickDelta, CallbackInfo ci)
     {
+        if (!HelmetDurability.INSTANCE.config().enabled)
+        {
+            return;
+        }
+
         if (!(entity instanceof PlayerEntity player))
         {
             return;

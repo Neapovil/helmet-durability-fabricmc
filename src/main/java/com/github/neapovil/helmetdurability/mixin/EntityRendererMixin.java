@@ -1,5 +1,7 @@
 package com.github.neapovil.helmetdurability.mixin;
 
+import net.minecraft.util.Colors;
+import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -16,10 +18,8 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.util.math.Matrix4f;
 
 @Mixin(EntityRenderer.class)
 public class EntityRendererMixin
@@ -29,10 +29,10 @@ public class EntityRendererMixin
     private TextRenderer textRenderer;
 
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/math/MatrixStack;pop()V"),
-            method = "Lnet/minecraft/client/render/entity/EntityRenderer;renderLabelIfPresent(Lnet/minecraft/entity/Entity;Lnet/minecraft/text/Text;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V")
-    protected void renderLabelIfPresent(Entity entity, Text text, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci)
+            method = "renderLabelIfPresent")
+    protected void renderLabelIfPresent(Entity entity, Text text, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, float tickDelta, CallbackInfo ci)
     {
-        if (!(entity instanceof PlayerEntity))
+        if (!(entity instanceof PlayerEntity player))
         {
             return;
         }
@@ -47,37 +47,24 @@ public class EntityRendererMixin
             return;
         }
 
-        final PlayerEntity player = (PlayerEntity) entity;
-
-        final MinecraftClient client = MinecraftClient.getInstance();
-
         final ItemStack helmet = player.getInventory().getArmorStack(3);
-
         final int damage = helmet.getMaxDamage() - helmet.getDamage();
 
-        if (damage == 0)
-        {
-            return;
-        }
+        final Text text1 = Text.literal("" + damage).setStyle(Style.EMPTY.withColor(helmet.getItemBarColor()).withBold(true));
 
-        final Text text1 = new LiteralText("" + damage).setStyle(Style.EMPTY.withColor(0xFFFFFF).withBold(true));
-
-        float h = -this.textRenderer.getWidth(text1) / 2;
-
+        final MinecraftClient client = MinecraftClient.getInstance();
+        float h = (float) -this.textRenderer.getWidth(text1) / 2;
+        float g = client.options.getTextBackgroundOpacity(0.25f);
+        final int j = (int) (g * 255.0f) << 24;
+        final int y = -10;
+        final boolean visible = !player.isSneaky();
         final Matrix4f matrix4f = matrices.peek().getPositionMatrix();
 
-        float g = client.options.getTextBackgroundOpacity(0.25f);
-        int j = (int) (g * 255.0f) << 24;
-
-        final boolean visible = !player.isSneaky();
-
-        int y = -12;
-
-        this.textRenderer.draw(text1, h, y, 0x20FFFFFF, false, matrix4f, vertexConsumers, visible, j, light);
+        this.textRenderer.draw(text1, h, (float) y, 0x20FFFFFF, false, matrix4f, vertexConsumers, visible ? TextRenderer.TextLayerType.SEE_THROUGH : TextRenderer.TextLayerType.NORMAL, j, light);
 
         if (visible)
         {
-            this.textRenderer.draw(text1, h, y, -1, false, matrix4f, vertexConsumers, false, 0, light);
+            this.textRenderer.draw(text1, h, (float) y, Colors.WHITE, false, matrix4f, vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0, light);
         }
     }
 }

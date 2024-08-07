@@ -3,10 +3,9 @@ package com.github.neapovil.helmetdurability;
 import com.github.neapovil.helmetdurability.config.ModConfig;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
+import net.fabricmc.api.ClientModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.fabricmc.api.ClientModInitializer;
 
 public final class HelmetDurability implements ClientModInitializer
 {

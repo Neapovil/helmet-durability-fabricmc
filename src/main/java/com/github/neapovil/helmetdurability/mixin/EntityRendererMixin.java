@@ -46,7 +46,7 @@ public abstract class EntityRendererMixin<T extends Entity>
             return;
         }
 
-        if (text.getString().toLowerCase().contains(" health"))
+        if (!text.equals(playerentity.getDisplayName()))
         {
             return;
         }

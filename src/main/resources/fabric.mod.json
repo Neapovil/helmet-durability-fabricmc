@@ -4,7 +4,9 @@
   "version": "${version}",
   "name": "Helmet Durability",
   "description": "",
-  "authors": ["Neapovil"],
+  "authors": [
+    "Neapovil"
+  ],
   "contact": {},
   "license": "Unlicense",
   "icon": "assets/helmetdurability/icon.png",
@@ -13,7 +15,9 @@
     "client": [
       "com.github.neapovil.helmetdurability.HelmetDurability"
     ],
-    "modmenu": ["com.github.neapovil.helmetdurability.integration.ModMenuIntegration"]
+    "modmenu": [
+      "com.github.neapovil.helmetdurability.integration.ModMenuIntegration"
+    ]
   },
   "mixins": [
     "helmetdurability.mixins.json"
